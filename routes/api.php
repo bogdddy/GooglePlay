@@ -21,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get("get_app_info", [GPlayAppsController::class, 'getAppsInfo'])->name("getAppsInfo");
 
+Route::get('history/{package}',[\App\Http\Controllers\ApiHistoryController::class,'show'])->name('history_installs');

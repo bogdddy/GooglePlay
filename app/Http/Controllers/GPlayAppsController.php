@@ -6,6 +6,7 @@ use App\Models\App;
 use App\Models\AppID;
 use App\Models\Category;
 use App\Models\Developer;
+use App\Models\History;
 use App\Models\Image;
 use App\Models\Package;
 use App\Models\Rating;
@@ -13,7 +14,7 @@ use App\Models\Video;
 use Illuminate\Http\Request;
 
 class GPlayAppsController extends Controller
-{       
+{
     /**
      * getAppsInfo
      * Obtenim info actualitzada de les apps de google play
@@ -87,7 +88,7 @@ class GPlayAppsController extends Controller
                     "one_star" => $ratingInfo->getOneStar()
                 ]
             );
-            
+
             $videoInfo = $appInfo->getVideo();
             if (isset($videoInfo)) {
                 Video::updateOrCreate(
@@ -142,7 +143,9 @@ class GPlayAppsController extends Controller
                     );
                 }
             }
-            
+
+            History::updateHistory($appDB->app_url,$appInfo->getInstalls());
+
             $appDB->touch();
         }
 
