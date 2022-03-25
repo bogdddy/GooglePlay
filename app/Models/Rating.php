@@ -9,6 +9,15 @@ class Rating extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'five_stars',
+        'four_stars',
+        'three_stars',
+        'two_stars',
+        'one_star',
+        'app_id'
+    ];
+
     public function app()
     {
         return $this->belongsTo(App::class);

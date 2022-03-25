@@ -15,12 +15,13 @@ class GPlayAppsController extends Controller
     public function getAppsInfo()
     {
         //* Obtenim les id de les apps de la database
-        $appIDs = Package::all();
+        $appsDB = Package::inRandomOrder()->limit(10)->get();
 
-        foreach ($appIDs as $appID) {
+        foreach ($appsDB as $appDB) {
             //* obtenim les dades de google play
             $gplay = new \Nelexa\GPlay\GPlayApps($defaultLocale = 'ca_ES', $defaultCountry = 'es');
-            $appInfo = $gplay->getAppInfo($appID);
+            $appInfo = $gplay->getAppInfo($appDB->app_url);
+            // dd($appInfo->getReleased());
 
             $categoryInfo = $appInfo->getCategory();
             $category = Category::updateOrCreate(
@@ -59,9 +60,10 @@ class GPlayAppsController extends Controller
                     "installs" => $appInfo->getInstalls(),
                     "price" => $appInfo->getPrice(),
                     "description" => $appInfo->getDescription(),
-                    "release_date" => $appInfo->getReleaseDate(),
+                    "release_date" => $appInfo->getReleased(),
                     "category_id" => $category->id,
-                    "developer_id" => $developer->id
+                    "developer_id" => $developer->id,
+                    "update_date" => $appInfo->getUpdated()
                 ]
             );
 
@@ -74,22 +76,25 @@ class GPlayAppsController extends Controller
                     "five_stars" => $ratingInfo->getFiveStars(),
                     "four_stars" => $ratingInfo->getFourStars(),
                     "three_stars" => $ratingInfo->getThreeStars(),
-                    "two_stars" => $ratingInfo->getSecondStars(),
+                    "two_stars" => $ratingInfo->getTwoStars(),
                     "one_star" => $ratingInfo->getOneStar()
                 ]
             );
             
             $videoInfo = $appInfo->getVideo();
-            $app->video()->updateOrCreate(
-                [
-                    "app_id" => $app->id
-                ],
-                [
-                    "url" => $videoInfo->getVideoUrl(),
-                    "image_url" => $videoInfo->getImageUrl(),
-                    "youtube_id" => $videoInfo->getYoutubeId()
-                ]
-            );
+            if (isset($videoInfo)) {
+                $app->video()->updateOrCreate(
+                    [
+                        "app_id" => $app->id
+                    ],
+                    [
+                        "url" => $videoInfo->getVideoUrl(),
+                        "image_url" => $videoInfo->getImageUrl(),
+                        "youtube_id" => $videoInfo->getYoutubeId()
+                    ]
+                );
+            }
+            
 
             $icon = $appInfo->getIcon();
             $app->images()->updateOrCreate(
@@ -131,6 +136,7 @@ class GPlayAppsController extends Controller
                     ]
                 );
             }
+            //TODO: ELS DE LA ÚLTIMA FILA QUE POSIN EL CODI AQUÍ
         }
 
         return true;

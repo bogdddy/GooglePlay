@@ -12,7 +12,8 @@ class Video extends Model
     protected $fillable = [
         'url',
         'image_url',
-        'youtube_i'
+        'youtube_id',
+        'app_id'
     ];
 
     public function app()
