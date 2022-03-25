@@ -25,7 +25,7 @@ return new class extends Migration
             $table->text("description");
             $table->foreignId("developer_id");
             $table->foreignId("category_id");
-            $table->timestamp("release_date");
+            $table->timestamp("release_date")->nullable();
             $table->timestamp("update_date");
             $table->timestamps();
 

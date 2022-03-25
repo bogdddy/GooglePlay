@@ -6,22 +6,29 @@ use App\Models\App;
 use App\Models\AppID;
 use App\Models\Category;
 use App\Models\Developer;
+use App\Models\Image;
 use App\Models\Package;
 use App\Models\Rating;
+use App\Models\Video;
 use Illuminate\Http\Request;
 
 class GPlayAppsController extends Controller
-{
+{       
+    /**
+     * getAppsInfo
+     * Obtenim info actualitzada de les apps de google play
+     * insertades a la taula packages
+     * @return void
+     */
     public function getAppsInfo()
     {
         //* Obtenim les id de les apps de la database
-        $appsDB = Package::inRandomOrder()->limit(10)->get();
+        $appsDB = Package::orderBy('updated_at', 'desc')->limit(10)->get();
 
         foreach ($appsDB as $appDB) {
             //* obtenim les dades de google play
             $gplay = new \Nelexa\GPlay\GPlayApps($defaultLocale = 'ca_ES', $defaultCountry = 'es');
             $appInfo = $gplay->getAppInfo($appDB->app_url);
-            // dd($appInfo->getReleased());
 
             $categoryInfo = $appInfo->getCategory();
             $category = Category::updateOrCreate(
@@ -83,62 +90,61 @@ class GPlayAppsController extends Controller
             
             $videoInfo = $appInfo->getVideo();
             if (isset($videoInfo)) {
-                $app->video()->updateOrCreate(
+                Video::updateOrCreate(
                     [
                         "app_id" => $app->id
                     ],
                     [
-                        "url" => $videoInfo->getVideoUrl(),
-                        "image_url" => $videoInfo->getImageUrl(),
-                        "youtube_id" => $videoInfo->getYoutubeId()
+                        'image_url' => $videoInfo->getImageUrl(),
+                        'youtube_id' => $videoInfo->getYoutubeId(),
+                        'url' => $videoInfo->getVideoUrl()
                     ]
                 );
             }
-            
-
             $icon = $appInfo->getIcon();
-            $app->images()->updateOrCreate(
-                [
-                    "app_id" => $app->id,
-                    "type_id" => 1
-                ],
-                [
-                    "url" => $icon->getUrl(),
-                    "original_size_url" => $icon->getOriginalSizeUrl(),
-                    "binary_image_content" => $icon->getBinaryImageContent()
-                ]
-            );
 
-            $cover = $appInfo->getCover();
-            $app->images()->updateOrCreate(
-                [
-                    "app_id" => $app->id,
-                    "type_id" => 2
-                ],
-                [
-                    "url" => $cover->getUrl(),
-                    "original_size_url" => $cover->getOriginalSizeUrl(),
-                    "binary_image_content" => $cover->getBinaryImageContent()
-                ]
-            );
-
-            $screenshots = $appInfo->getIcon();
-            foreach ($screenshots as $screenshot) {
-                $app->images()->updateOrCreate(
+            if (isset($icon)) {
+                Image::updateOrCreate(
                     [
                         "app_id" => $app->id,
-                        "type_id" => 3,
-                        "url" => $screenshot->getUrl(),
+                        "type_id" => 1
                     ],
                     [
-                        "original_size_url" => $screenshot->getOriginalSizeUrl(),
-                        "binary_image_content" => $screenshot->getBinaryImageContent()
+                        "url" => $icon->getUrl()
+                    ]
+                );
+
+            }
+            $cover = $appInfo->getCover();
+            if (isset($cover)) {
+                Image::updateOrCreate(
+                    [
+                        "app_id" => $app->id,
+                        "type_id" => 2
+                    ],
+                    [
+                        "url" => $cover->getUrl()
                     ]
                 );
             }
-            //TODO: ELS DE LA ÚLTIMA FILA QUE POSIN EL CODI AQUÍ
+
+            $screenshots = $appInfo->getScreenshots();
+            if (count($screenshots) > 0) {
+                foreach ($screenshots as $screenshot) {
+                    Image::updateOrCreate(
+                        [
+                            "app_id" => $app->id,
+                            "type_id" => 3
+                        ],
+                        [
+                            "url" => $screenshot->getUrl()
+                        ]
+                    );
+                }
+            }
+            
+            $appDB->touch();
         }
 
-        return true;
     }
 }

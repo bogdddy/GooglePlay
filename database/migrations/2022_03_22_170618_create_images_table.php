@@ -16,8 +16,6 @@ return new class extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->id();
             $table->string("url");
-            $table->string("original_size_url");
-            $table->string("binary_image_content");
             $table->foreignId("app_id");
             $table->foreignId("type_id");
             $table->timestamps();

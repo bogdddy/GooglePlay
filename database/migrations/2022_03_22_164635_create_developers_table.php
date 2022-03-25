@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string("name");
             $table->string("google_play_id");
             $table->string("url");
-            $table->string("website");
+            $table->string("website")->nullable();
             $table->timestamps();
         });
     }
