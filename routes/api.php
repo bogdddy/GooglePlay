@@ -17,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('history/{package}',[\App\Http\Controllers\ApiHistoryController::class,'show'])->name('history_installs');
