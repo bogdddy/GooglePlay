@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get("get_app_info", [GPlayAppsController::class, 'getAppsInfo'])->name("getAppsInfo");
+
