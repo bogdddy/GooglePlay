@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
             $table->text("package");
+            $table->text("app_url");
             $table->timestamps();
         });
     }
