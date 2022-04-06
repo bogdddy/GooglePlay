@@ -119,7 +119,7 @@
 			
 			<!--Console Content-->
 			<div class="flex flex-wrap">
-                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                <div class="w-full md:w-1/2 xl:w-1/5 p-3">
                     <!--Metric Card-->
                     <div class="bg-gray-900 border border-gray-800 rounded shadow p-2">
                         <div class="flex flex-row items-center">
@@ -127,14 +127,14 @@
                                 <div class="rounded p-3 bg-green-600"><i class="fa fa-wallet fa-2x fa-fw fa-inverse"></i></div>
                             </div>
                             <div class="flex-1 text-right md:text-center">
-                                <h5 class="font-bold uppercase text-gray-400">Total Revenue</h5>
-                                <h3 class="font-bold text-3xl text-gray-600">$3249 <span class="text-green-500"><i class="fas fa-caret-up"></i></span></h3>
+                                <h5 class="font-bold uppercase text-gray-400">Nom</h5>
+                                <h3 class="font-bold text-1xl text-gray-600">{{$app->name}} </h3>
                             </div>
                         </div>
                     </div>
                     <!--/Metric Card-->
                 </div>
-                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                <div class="w-full md:w-1/2 xl:w-1/5 p-3">
                     <!--Metric Card-->
                     <div class="bg-gray-900 border border-gray-800 rounded shadow p-2">
                         <div class="flex flex-row items-center">
@@ -142,14 +142,14 @@
                                 <div class="rounded p-3 bg-pink-600"><i class="fas fa-users fa-2x fa-fw fa-inverse"></i></div>
                             </div>
                             <div class="flex-1 text-right md:text-center">
-                                <h5 class="font-bold uppercase text-gray-400">Total Users</h5>
-                                <h3 class="font-bold text-3xl text-gray-600">249 <span class="text-pink-500"><i class="fas fa-exchange-alt"></i></span></h3>
+                                <h5 class="font-bold uppercase text-gray-400">ID GooglePlay</h5>
+                                <h3 class="font-bold text-1xl text-gray-600">{{$app->google_play_id}} <span class="text-pink-500"><i class="fas fa-exchange-alt"></i></span></h3>
                             </div>
                         </div>
                     </div>
                     <!--/Metric Card-->
                 </div>
-                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                <div class="w-full md:w-1/2 xl:w-1/6 p-3">
                     <!--Metric Card-->
                     <div class="bg-gray-900 border border-gray-800 rounded shadow p-2">
                         <div class="flex flex-row items-center">
@@ -157,14 +157,14 @@
                                 <div class="rounded p-3 bg-yellow-600"><i class="fas fa-user-plus fa-2x fa-fw fa-inverse"></i></div>
                             </div>
                             <div class="flex-1 text-right md:text-center">
-                                <h5 class="font-bold uppercase text-gray-400">New Users</h5>
-                                <h3 class="font-bold text-3xl text-gray-600">2 <span class="text-yellow-600"><i class="fas fa-caret-up"></i></span></h3>
+                                <h5 class="font-bold uppercase text-gray-400">País</h5>
+                                <h3 class="font-bold text-3xl text-gray-600">{{$app->country}} <span class="text-yellow-600"><i class="fas fa-caret-up"></i></span></h3>
                             </div>
                         </div>
                     </div>
                     <!--/Metric Card-->
                 </div>
-                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                <div class="w-full md:w-1/2 xl:w-1/4 p-3">
                     <!--Metric Card-->
                     <div class="bg-gray-900 border border-gray-800 rounded shadow p-2">
                         <div class="flex flex-row items-center">
@@ -172,14 +172,14 @@
                                 <div class="rounded p-3 bg-blue-600"><i class="fas fa-server fa-2x fa-fw fa-inverse"></i></div>
                             </div>
                             <div class="flex-1 text-right md:text-center">
-                                <h5 class="font-bold uppercase text-gray-400">Server Uptime</h5>
-                                <h3 class="font-bold text-3xl text-gray-600">152 days</h3>
+                                <h5 class="font-bold uppercase text-gray-400">Link</h5>
+                                <h3 class="font-bold text-1xl text-gray-600">{{$app->url}}</h3>
                             </div>
                         </div>
                     </div>
                     <!--/Metric Card-->
                 </div>
-                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                <div class="w-full md:w-1/2 xl:w-1/6 p-3">
                     <!--Metric Card-->
                     <div class="bg-gray-900 border border-gray-800 rounded shadow p-2">
                         <div class="flex flex-row items-center">
@@ -187,14 +187,14 @@
                                 <div class="rounded p-3 bg-indigo-600"><i class="fas fa-tasks fa-2x fa-fw fa-inverse"></i></div>
                             </div>
                             <div class="flex-1 text-right md:text-center">
-                                <h5 class="font-bold uppercase text-gray-400">To Do List</h5>
-                                <h3 class="font-bold text-3xl text-gray-600">7 tasks</h3>
+                                <h5 class="font-bold uppercase text-gray-400">Score</h5>
+                                <h3 class="font-bold text-3xl text-gray-600">{{$app->score}}</h3>
                             </div>
                         </div>
                     </div>
                     <!--/Metric Card-->
                 </div>
-                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                <div class="w-full md:w-1/2 xl:w-1/5 p-3">
                     <!--Metric Card-->
                     <div class="bg-gray-900 border border-gray-800 rounded shadow p-2">
                         <div class="flex flex-row items-center">

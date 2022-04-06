@@ -46,9 +46,9 @@ class FrontController extends Controller
      */
     public function show($id)
     {
-        $app = App::where('id', $id)->with('rating','video','images')->get()->first();
+        $app = App::where('id', $id)->with('rating','video','images','category','developer')->get()->first();
         
-        return view('showApp')->with(compact('app'));
+        return view('app.show')->with(compact('app'));
         
     }
 
