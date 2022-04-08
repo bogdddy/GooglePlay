@@ -38,4 +38,15 @@ class App extends Model
     {
         return $this->hasMany(Image::class);
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+    
+    public function developer()
+    {
+        return $this->belongsTo(Developer::class);
+    }
+
 }

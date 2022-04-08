@@ -26,7 +26,7 @@ return new class extends Migration
             $table->foreignId("developer_id");
             $table->foreignId("category_id");
             $table->timestamp("release_date")->nullable();
-            $table->timestamp("update_date");
+            $table->date("update_date");
             $table->timestamps();
 
             $table->foreign("developer_id")->references("id")->on("developers");
