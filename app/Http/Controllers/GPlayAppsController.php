@@ -24,7 +24,7 @@ class GPlayAppsController extends Controller
     public function getAppsInfo()
     {
         //* Obtenim les id de les apps de la database
-        $appsDB = Package::orderBy('updated_at', 'desc')->limit(10)->get();
+        $appsDB = Package::orderBy('updated_at', 'asc')->limit(10)->get();
 
         foreach ($appsDB as $appDB) {
             //* obtenim les dades de google play
