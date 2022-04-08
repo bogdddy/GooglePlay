@@ -13,7 +13,7 @@
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
         @yield('customcss')
-
+        @yield('customjs')
 
         @livewireStyles
 
@@ -48,8 +48,5 @@
 
         @livewireScripts
         <!-- <script src="{{ asset('js/footer.js') }}" defer></script> -->
-        @yield('customjs')
-
-        
     </body>
 </html>

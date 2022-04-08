@@ -7,7 +7,8 @@
 @section('customcss')
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
     <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js" integrity="sha256-XF29CBwU1MWLaGEnsELogU6Y6rcc5nCkhhx89nFMIDQ=" crossorigin="anonymous"></script>
+{{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js" integrity="sha256-XF29CBwU1MWLaGEnsELogU6Y6rcc5nCkhhx89nFMIDQ=" crossorigin="anonymous"></script>--}}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 	<style>
 		.bg-black-alt  {
 			background:#191919;
@@ -18,18 +19,23 @@
 		.border-black-alt {
 			border-color: #191919;
 		}
-		
+
 	</style>
 @endsection
+@section('customjs')
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+@endsection
 
-@section('content')	
+@section('content')
 
 
 	<!--Container-->
 	<div class="container w-full mx-auto pt-20">
-		
+
 		<div class="w-full px-4 md:px-0 md:mt-8 mb-16 text-gray-800 leading-normal">
-			
+
 			<!--Console Content-->
 			<div class="grid grid-rows-3 grid-flow-col auto-cols-max gap-4">
                 <div class="row-span-3 w-full  md:h-1/4  p-3">
@@ -163,16 +169,16 @@
 
 			<!--Divider-->
 			<hr class="border-b-2 border-gray-600 my-8 mx-4">
+            @include('partials.history')
 
-            
-								
+
 			<!--/ Console Content-->
-					
-		</div>
-		
 
-	</div> 
-	
+		</div>
+
+
+	</div>
+
 
 
 @endsection
