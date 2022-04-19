@@ -26,3 +26,5 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::get("get_app_info", [GPlayAppsController::class, 'getAppsInfo'])->name("getAppsInfo");
+
+Route::get("search", [SearcherController::class, 'search'])->name("search");
