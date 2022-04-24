@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 
 class History extends Model
 {
@@ -15,33 +14,33 @@ class History extends Model
         'dataInstalls'
     ];
 
-    public static function updateHistory (String $package, int $installs){
-
-        $jsonArrayInstalacions = '[]';
+    /**
+     * updateHistory
+     * Actualizem o creeem el historial de cada aplicació
+     * a la taula History
+     * @param  $package $installs
+     */
+    public static function updateHistory (String $package, int $installs)
+    {
+        $jsonArrayInstalls = '[]';
+        $date = date('d-m-Y');
 
         $history = History::firstOrCreate(
-
             ['package' => $package],
-            ['dataInstalls' => $jsonArrayInstalacions]
-
+            ['dataInstalls' => $jsonArrayInstalls]
         );
-
-        $data = Carbon::now()->format('d-m-Y');
 
         $jsonBD = $history->dataInstalls;
 
         $arrayInstalacions = json_decode($jsonBD,true);
+        $notHaveInstalls = !array_key_exists($date, $arrayInstalacions);
 
-        if(!array_key_exists($data, $arrayInstalacions)) {
-
-            $arrayInstalacions[$data] = $installs;
+        if($notHaveInstalls) {
+            $arrayInstalacions[$date] = $installs;
 
             $history->dataInstalls = json_encode($arrayInstalacions);
-
             $history->save();
 
         }
-
     }
-
 }
