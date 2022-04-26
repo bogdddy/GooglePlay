@@ -1,3 +1,4 @@
+require('dotenv').config()
 const puppeteer = require('puppeteer');
 var mysql = require('mysql');
 const { now } = require('lodash');
@@ -7,10 +8,10 @@ const channels = ['social', 'eat', 'game', 'watch', 'money'];
 for (let a = 0; a < channels.length; a++) {
   for (let t = 0; t <= 40; t+=20) {
     const connection = mysql.createConnection({
-      host: '127.0.0.1',
-      user: 'root',
-      password: '',
-      database: 'googlePlay'
+      host: process.env.DB_HOST,
+      user: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE
     });
     
     (async () => {
