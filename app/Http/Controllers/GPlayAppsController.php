@@ -18,7 +18,7 @@ class GPlayAppsController extends Controller
 {
 
     //Limit de packages que agafa per consulta
-    private $LIMIT_COUNT_APPS = 10;
+    private static $LIMIT_COUNT_APPS = 10;
 
     /**
      * getAppsInfo
@@ -37,21 +37,21 @@ class GPlayAppsController extends Controller
             $appInfo = $gplay->getAppInfo($appDB->app_url);
 
             //Hem tret la següent part en funcions més petites ja que era una funcio massa llarga
-            $category = insertarActualitzarCategory($appInfo);
+            $category = $this->insertarActualitzarCategory($appInfo);
 
-            $developer = insertarActualitzarDepeloper($appInfo);
+            $developer = $this->insertarActualitzarDeveloper($appInfo);
 
-            $app = insertarActualitzarApp($appInfo,$category,$developer);
+            $app = $this->insertarActualitzarApp($appInfo,$category,$developer);
 
-            insertarActualitzarRating($appInfo,$app);
+            $this->insertarActualitzarRating($appInfo,$app);
 
-            insertarActualitzarVideo($appInfo,$app);
+            $this->insertarActualitzarVideo($appInfo,$app);
 
-            insertarActualitzarIcon($appInfo,$app);
+            $this->insertarActualitzaIcon($appInfo,$app);
 
-            insertarActualitzarCover($appInfo,$app);
+            $this->insertarActualitzarCover($appInfo,$app);
 
-            insertarActualitzarScreenshot($appInfo,$app);
+            $this->insertarActualitzarScreenshot($appInfo,$app);
 
             History::updateHistory($appDB->app_url,$appInfo->getInstalls());
 

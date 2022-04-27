@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\GPlayAppsController;
+use App\Http\Controllers\SearcherController;
 use Illuminate\Support\Facades\Route;
 
 /*
