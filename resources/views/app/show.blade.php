@@ -7,7 +7,6 @@
 @section('customcss')
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
     <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>
-{{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js" integrity="sha256-XF29CBwU1MWLaGEnsELogU6Y6rcc5nCkhhx89nFMIDQ=" crossorigin="anonymous"></script>--}}
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 	<style>
 		.bg-black-alt  {
@@ -29,8 +28,6 @@
 @endsection
 
 @section('content')
-
-
 	<!--Container-->
 	<div class="container w-full mx-auto pt-20">
 
@@ -44,7 +41,7 @@
 
                     <div class="pr-0">
                         @foreach($app->images as $image)
-                            @if ($image->type_id == 1)
+                            @if ($image->type_id === 1)
                                 <img class="rounded-lg" src="{{$image->url}}">
                             @endif
                         @endforeach
@@ -165,38 +162,18 @@
                                     
             </div>
      
-                    <!--Metric Card-->
-                    <div class="pt-12 ">
-                        <hr class="border-b-2 border-gray-600 w-full"> 
-                    </div>   
-                        
-                              
-                                    <h5 class="font-bold uppercase pt-12 text-gray-800">Descripció</h5>
-                                    <div class="font-bold text-gray-600 whitespace-pre-line w-96">{{$app->description}}</div>
-                           
-         
-
-            
-					
+            <!--Metric Card-->
+            <div class="pt-12 ">
+                <hr class="border-b-2 border-gray-600 w-full"> 
+            </div>          
+            <h5 class="font-bold uppercase pt-12 text-gray-800">Descripció</h5>
+            <div class="font-bold text-gray-600 whitespace-pre-line w-96">
+                {{$app->description}}
+            </div>
 		</div>
 
-       
-		
-
-
-
-			<!--Divider-->
-			<hr class="border-b-2 border-gray-600 my-8 mx-4">
-            @include('partials.history')
-
-
-			<!--/ Console Content-->
-
-		</div>
-
-
+        <!--Divider-->
+        <hr class="border-b-2 border-gray-600 my-8 mx-4">
+        @include('partials.history')
 	</div>
-
-
-
 @endsection
