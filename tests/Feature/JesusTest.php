@@ -8,8 +8,6 @@ use Tests\TestCase;
 
 class JesusTest extends TestCase
 {
-
-    //Per executar aquest test s'ha de modificar el GPlayAppsController.php
     public function test_front_controller_show(){
 
         $package = "demo1.demo.jesus"
@@ -18,14 +16,17 @@ class JesusTest extends TestCase
 
 
         History::updateHistory($package, $installNumbers);
-        //History::updateHistory($package, $installNumbers);
+        History::updateHistory($package, $installNumbers);
 
-        $historys = History::where("package", $package)->get();
+        //$historys = History::where("package", $package)->get();
 
         $history = History::where("package", $package)->first();
         $installs = json_decode($history->dataInstall, true);
         $this->assertTrue(array_key_exists($data, $installs));
         $this->assertEquals($installNumbers, $installs[$data]);
+
+
+        
     }
 
 }
