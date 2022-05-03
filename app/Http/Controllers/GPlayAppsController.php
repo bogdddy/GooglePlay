@@ -28,7 +28,7 @@ class GPlayAppsController extends Controller
      */
     //Per fer test
     //public function getAppsInfo($appDB){
-    public function getAppsInfo()
+    public function getAppsInfo(): void
     {
 
         //* Obtenim les id de les apps de la database
@@ -71,7 +71,7 @@ class GPlayAppsController extends Controller
      * @param AppInfo $appInfo
      * @return Category $category
      */
-    private function insertarActualitzarCategory (AppInfo $appInfo)
+    private function insertarActualitzarCategory (AppInfo $appInfo): Category
     {
 
             $categoryInfo = $appInfo->getCategory();
@@ -97,7 +97,8 @@ class GPlayAppsController extends Controller
      * @param AppInfo $appInfo
      * @return Developer $developer
      */
-    private function insertarActualitzarDeveloper (AppInfo $appInfo){
+    private function insertarActualitzarDeveloper (AppInfo $appInfo): Developer
+    {
 
         $developerInfo = $appInfo->getDeveloper();
         $developer = Developer::updateOrCreate(
@@ -123,7 +124,8 @@ class GPlayAppsController extends Controller
      * @param Developer $developer
      * @return App $app
      */
-    private function insertarActualitzarApp(AppInfo $appInfo,Category $category,Developer $developer){
+    private function insertarActualitzarApp(AppInfo $appInfo,Category $category,Developer $developer): App
+    {
 
         $app = App::updateOrCreate(
             [
@@ -154,7 +156,8 @@ class GPlayAppsController extends Controller
      * @param AppInfo $appInfo
      * @param App $app
      */
-    private function insertarActualitzarRating(AppInfo $appInfo,App $app){
+    private function insertarActualitzarRating(AppInfo $appInfo,App $app): void
+    {
 
         $ratingInfo = $appInfo->getHistogramRating();
         $app->rating()->updateOrCreate(
@@ -178,7 +181,8 @@ class GPlayAppsController extends Controller
      * @param AppInfo $appInfo
      * @param App $app
      */
-    private function insertarActualitzarVideo(AppInfo $appInfo,App $app){
+    private function insertarActualitzarVideo(AppInfo $appInfo,App $app): void
+    {
 
         $videoInfo = $appInfo->getVideo();
         if (isset($videoInfo)) {
@@ -202,7 +206,8 @@ class GPlayAppsController extends Controller
      * @param AppInfo $appInfo
      * @param App $app
      */
-    private function insertarActualitzaIcon(AppInfo $appInfo,App $app){
+    private function insertarActualitzaIcon(AppInfo $appInfo,App $app): void
+    {
         $icon = $appInfo->getIcon();
 
         if (isset($icon)) {
@@ -225,7 +230,8 @@ class GPlayAppsController extends Controller
      * @param AppInfo $appInfo
      * @param App $app
      */
-    private function insertarActualitzarCover(AppInfo $appInfo,App $app){
+    private function insertarActualitzarCover(AppInfo $appInfo,App $app): void
+    {
         $cover = $appInfo->getCover();
         if (isset($cover)) {
             Image::updateOrCreate(
@@ -246,7 +252,8 @@ class GPlayAppsController extends Controller
      * @param AppInfo $appInfo
      * @param App $app
      */
-    private function insertarActualitzarScreenshoot(AppInfo $appInfo, App $app){
+    private function insertarActualitzarScreenshoot(AppInfo $appInfo, App $app): void
+    {
         $screenshots = $appInfo->getScreenshots();
         if (count($screenshots) > 0) {
             foreach ($screenshots as $screenshot) {
