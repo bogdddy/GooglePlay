@@ -18,7 +18,7 @@ class GPlayAppsController extends Controller
 {
 
     //Limit de packages que agafa per consulta
-    private static $LIMIT_COUNT_APPS = 10;
+    const LIMIT_COUNT_APPS = 10;
 
     /**
      * getAppsInfo
@@ -34,7 +34,7 @@ class GPlayAppsController extends Controller
         //* Obtenim les id de les apps de la database
 
         //Comenta la consulta i el foreach per fer test
-        $appsDB = Package::orderBy('updated_at', 'asc')->limit(GPlayAppsController::$LIMIT_COUNT_APPS)->get();
+        $appsDB = Package::orderBy('updated_at', 'asc')->limit(self::LIMIT_COUNT_APPS)->get();
 
         foreach ($appsDB as $appDB) {
             //* obtenim les dades de google play
@@ -62,7 +62,6 @@ class GPlayAppsController extends Controller
 
             $appDB->touch();
         }
-
     }
 
     /**
@@ -71,24 +70,22 @@ class GPlayAppsController extends Controller
      * @param AppInfo $appInfo
      * @return Category $category
      */
-    private function insertarActualitzarCategory (AppInfo $appInfo): Category
+    private function insertarActualitzarCategory(AppInfo $appInfo): Category
     {
+        $categoryInfo = $appInfo->getCategory();
+        $category = Category::updateOrCreate(
+            [
+                "google_play_id" => $categoryInfo->getId()
+            ],
+            [
+                "name"                    => $categoryInfo->getName(),
+                "is_games_category"       => $categoryInfo->isGamesCategory(),
+                "is_family_category"      => $categoryInfo->isFamilyCategory(),
+                "is_application_category" => $categoryInfo->isApplicationCategory()
+            ]
+        );
 
-            $categoryInfo = $appInfo->getCategory();
-            $category = Category::updateOrCreate(
-                [
-                    "google_play_id" => $categoryInfo->getId()
-                ],
-                [
-                    "name" => $categoryInfo->getName(),
-                    "is_games_category" => $categoryInfo->isGamesCategory(),
-                    "is_family_category" => $categoryInfo->isFamilyCategory(),
-                    "is_application_category" => $categoryInfo->isApplicationCategory()
-                ]
-            );
-
-            return $category;
-
+        return $category;
     }
 
     /**
@@ -97,23 +94,21 @@ class GPlayAppsController extends Controller
      * @param AppInfo $appInfo
      * @return Developer $developer
      */
-    private function insertarActualitzarDeveloper (AppInfo $appInfo): Developer
+    private function insertarActualitzarDeveloper(AppInfo $appInfo): Developer
     {
-
         $developerInfo = $appInfo->getDeveloper();
         $developer = Developer::updateOrCreate(
             [
                 "google_play_id" => $developerInfo->getId()
             ],
             [
-                "name" => $developerInfo->getName(),
-                "url" => $developerInfo->getUrl(),
+                "name"    => $developerInfo->getName(),
+                "url"     => $developerInfo->getUrl(),
                 "website" => $developerInfo->getWebsite()
             ]
         );
 
         return $developer;
-
     }
 
     /**
@@ -124,30 +119,28 @@ class GPlayAppsController extends Controller
      * @param Developer $developer
      * @return App $app
      */
-    private function insertarActualitzarApp(AppInfo $appInfo,Category $category,Developer $developer): App
+    private function insertarActualitzarApp(AppInfo $appInfo, Category $category, Developer $developer): App
     {
-
         $app = App::updateOrCreate(
             [
                 "google_play_id" => $appInfo->getId()
             ],
             [
-                "name" => $appInfo->getName(),
-                "country" => $appInfo->getCountry(),
-                "url" => $appInfo->getUrl(),
-                "score" => $appInfo->getScore(),
-                "installs" => $appInfo->getInstalls(),
-                "price" => $appInfo->getPrice(),
-                "description" => $appInfo->getDescription(),
+                "name"         => $appInfo->getName(),
+                "country"      => $appInfo->getCountry(),
+                "url"          => $appInfo->getUrl(),
+                "score"        => $appInfo->getScore(),
+                "installs"     => $appInfo->getInstalls(),
+                "price"        => $appInfo->getPrice(),
+                "description"  => $appInfo->getDescription(),
                 "release_date" => $appInfo->getReleased(),
-                "category_id" => $category->id,
+                "category_id"  => $category->id,
                 "developer_id" => $developer->id,
-                "update_date" => $appInfo->getUpdated()
+                "update_date"  => $appInfo->getUpdated()
             ]
         );
 
         return $app;
-
     }
 
     /**
@@ -156,23 +149,21 @@ class GPlayAppsController extends Controller
      * @param AppInfo $appInfo
      * @param App $app
      */
-    private function insertarActualitzarRating(AppInfo $appInfo,App $app): void
+    private function insertarActualitzarRating(AppInfo $appInfo, App $app): void
     {
-
         $ratingInfo = $appInfo->getHistogramRating();
         $app->rating()->updateOrCreate(
             [
                 "app_id" => $app->id
             ],
             [
-                "five_stars" => $ratingInfo->getFiveStars(),
-                "four_stars" => $ratingInfo->getFourStars(),
+                "five_stars"  => $ratingInfo->getFiveStars(),
+                "four_stars"  => $ratingInfo->getFourStars(),
                 "three_stars" => $ratingInfo->getThreeStars(),
-                "two_stars" => $ratingInfo->getTwoStars(),
-                "one_star" => $ratingInfo->getOneStar()
+                "two_stars"   => $ratingInfo->getTwoStars(),
+                "one_star"    => $ratingInfo->getOneStar()
             ]
         );
-
     }
 
     /**
@@ -181,9 +172,8 @@ class GPlayAppsController extends Controller
      * @param AppInfo $appInfo
      * @param App $app
      */
-    private function insertarActualitzarVideo(AppInfo $appInfo,App $app): void
+    private function insertarActualitzarVideo(AppInfo $appInfo, App $app): void
     {
-
         $videoInfo = $appInfo->getVideo();
         if (isset($videoInfo)) {
             Video::updateOrCreate(
@@ -191,13 +181,12 @@ class GPlayAppsController extends Controller
                     "app_id" => $app->id
                 ],
                 [
-                    'image_url' => $videoInfo->getImageUrl(),
+                    'image_url'  => $videoInfo->getImageUrl(),
                     'youtube_id' => $videoInfo->getYoutubeId(),
-                    'url' => $videoInfo->getVideoUrl()
+                    'url'        => $videoInfo->getVideoUrl()
                 ]
             );
         }
-
     }
 
     /**
@@ -206,14 +195,14 @@ class GPlayAppsController extends Controller
      * @param AppInfo $appInfo
      * @param App $app
      */
-    private function insertarActualitzaIcon(AppInfo $appInfo,App $app): void
+    private function insertarActualitzaIcon(AppInfo $appInfo, App $app): void
     {
         $icon = $appInfo->getIcon();
 
         if (isset($icon)) {
             Image::updateOrCreate(
                 [
-                    "app_id" => $app->id,
+                    "app_id"  => $app->id,
                     "type_id" => 1
                 ],
                 [
@@ -230,13 +219,13 @@ class GPlayAppsController extends Controller
      * @param AppInfo $appInfo
      * @param App $app
      */
-    private function insertarActualitzarCover(AppInfo $appInfo,App $app): void
+    private function insertarActualitzarCover(AppInfo $appInfo, App $app): void
     {
         $cover = $appInfo->getCover();
         if (isset($cover)) {
             Image::updateOrCreate(
                 [
-                    "app_id" => $app->id,
+                    "app_id"  => $app->id,
                     "type_id" => 2
                 ],
                 [
@@ -259,7 +248,7 @@ class GPlayAppsController extends Controller
             foreach ($screenshots as $screenshot) {
                 Image::updateOrCreate(
                     [
-                        "app_id" => $app->id,
+                        "app_id"  => $app->id,
                         "type_id" => 3
                     ],
                     [
@@ -269,5 +258,4 @@ class GPlayAppsController extends Controller
             }
         }
     }
-
 }
