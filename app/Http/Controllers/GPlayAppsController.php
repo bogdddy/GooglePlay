@@ -26,9 +26,14 @@ class GPlayAppsController extends Controller
      * insertades a la taula packages
      * @return void
      */
+    //Per fer test
+    //public function getAppsInfo($appDB){
     public function getAppsInfo()
     {
+
         //* Obtenim les id de les apps de la database
+
+        //Comenta la consulta i el foreach per fer test
         $appsDB = Package::orderBy('updated_at', 'asc')->limit(GPlayAppsController::$LIMIT_COUNT_APPS)->get();
 
         foreach ($appsDB as $appDB) {
