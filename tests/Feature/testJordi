@@ -1,0 +1,58 @@
+<?php
+
+namespace Tests\Feature;
+use App\Models\History;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
+
+class testJordi extends TestCase
+{
+
+
+    public function testJordi_hsitory_new_app()
+    {
+        //iniciem
+        $package = "demo.demo.jordi";
+        $installnum = 100;
+        $data = date('d-m-Y');
+        
+        //Cridem a la funció
+        History::updateHistory($package, $installnum);
+
+        //Validem
+        $history = History::where($package)->first();
+        $installs = json_decode($history->dataInstalls, true);
+
+        //Comprovem si existeix el registre
+        $this->assertTrue(array_key_exists($data, $installs));
+        $this->assertEquals($installnum, $installs[$data]);
+
+    }
+
+    public function testJord_hsitory_app_exist_no_duplicate()
+    {
+        //iniciem
+        $package = "demo2.demo.jordi";
+        $installnum = 100;
+        $data = date('d-m-Y');
+        
+        //Cridem a la funció
+        History::updateHistory($package, $installnum); 
+        History::updateHistory($package, $installnum);  
+
+        //Validem
+        $historys = History::where($package)->get();
+        //Es comprova si n'hi ha només 1
+        $this->assertEquals(1,count($historys));
+
+        //Validem si ha estat correcte
+        $history = History::where($package)->first();
+        $installs = json_decode($history->dataInstalls, true);
+
+        //Comprovem si existeix el registre
+        $this->assertTrue(array_key_exists($data, $installs));
+        $this->assertEquals($installnum, $installs[$data]);
+    }
+
+}
